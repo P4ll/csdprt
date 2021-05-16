@@ -1,9 +1,14 @@
-from django.urls import path, include
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
-from .views import *
-from .views import RegisterUserView, RegisterDoneView
-from .views import user_activate
+from django.contrib.auth.views import (LoginView, LogoutView,
+                                       PasswordChangeDoneView,
+                                       PasswordChangeView,
+                                       PasswordResetCompleteView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetDoneView,
+                                       PasswordResetView)
+from django.urls import include, path
 
+from .views import *
+from .views import RegisterDoneView, RegisterUserView, user_activate
 
 app_name = 'accounts'
 

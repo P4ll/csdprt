@@ -1,5 +1,6 @@
-from django.template.loader import render_to_string
 from django.core.signing import Signer
+from django.template.loader import render_to_string
+
 from csdprt.settings import ALLOWED_HOSTS
 
 signer = Signer()

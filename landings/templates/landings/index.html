@@ -506,5 +506,65 @@
     </section>
 
 
+    <section class="py-8 py-md-11 bg-gray-200">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-10 text-center mb-3">
+
+                    <!-- Heading -->
+                    <h2 class="fw-bold" id="why">
+                        Новости
+                    </h2>
+
+                </div>
+                <div class="row gx-4">
+                    {% for post in posts %}
+                <div class="col-12 col-lg-6 d-lg-flex mb-4">
+
+                    <!-- Card -->
+                    <div class="card shadow-light-lg overflow-hidden" data-aos="fade-up">
+                        <div class="row">
+                            <div class="col">
+
+                                <!-- Body -->
+                                <div class="card-body py-7 py-md-9">
+                                     {% if post.tag_id.all|length %}
+                                        <span class="badge rounded-pill bg-gray-600 badge-float badge-float-inside">
+                                    <span class="h6 text-uppercase"> {% with  post.tag_id.all|first as tag %}{{ tag.name }}{% endwith %}</span>
+                                </span>
+                                    {% endif %}
+
+                                    <div class="mb-3 text-muted ">{{ post.date |date:"d M" }}</div>
+
+                                    <!-- Heading -->
+                                    <h4 class="fw-bold">
+                                        {{ post.title }}
+                                    </h4>
+
+                                    <!-- Text -->
+                                    <p class=" mb-0 text-justify small">
+                                       {{ post.description}}
+                                    </p>
+                                <br>
+                                <a href="{% url 'blog:news_detail' post.id %}" class=" text-muted mt-5 mb-0">Подробнее</a>
+
+                                </div>
+
+                            </div>
+                        </div> <!-- / .row -->
+                    </div>
+
+                </div>
+                {% endfor %}
+                </div>
+                <div class="row mb-5">
+                    <div class="col text-center mt-5" data-aos="fade-up">
+                        <a href="{% url 'blog:news' %}" class="btn btn-outline-secondary rounded-pill">Больше новостей</a>
+                    </div>
+                </div>
+
+            </div> <!-- / .container -->
+    </section>
+
 
 {% endblock %}

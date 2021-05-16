@@ -1,24 +1,24 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.signing import BadSignature
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import UpdateView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.signing import BadSignature
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import UpdateView, CreateView
-from .utilities import signer
-from .models import AdvUser
+from django.views.generic.edit import CreateView, UpdateView
+
 from .forms import ChangeUserinfoForm, RegisterUserForm
+from .models import AdvUser
+from .utilities import signer
 
 
 @login_required
-def profile(request) :
+def profile(request):
     return render(request, 'accounts/profile.html')
+
 
 class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView) :
     model = AdvUser
@@ -35,6 +35,7 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView) :
         if not queryset:
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
+
 
 class AccountsPasswordChangeView(PasswordChangeView):
     success_url = reverse_lazy('accounts:profile')

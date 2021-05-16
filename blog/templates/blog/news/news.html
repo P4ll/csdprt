@@ -1,0 +1,114 @@
+{% extends "header.html" %}
+
+{% block title %}Новости{% endblock %}
+{% load static %}
+{% block content %}
+
+ <header class="bg-dark pt-9 pb-11 d-none d-md-block">
+    <div class="container-md">
+        <div class="row align-items-center">
+            <div class="col text-center">
+
+                <!-- Heading -->
+                <h1 class="fw-bold text-white mb-2">
+                    Новости
+                </h1>
+
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</header>
+
+    <section>
+        <div class="container mt-5 mb-10">
+            <div class="row">
+                <div class="col-8">
+                    <div class="col-before-ajax">
+                        {% for n in news %}
+                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative  bg-white " data-aos="fade-up">
+                                <div class="col p-4 d-flex flex-column position-static">
+                                    {% if n.tag_id.all|length %}
+                                        <span class="badge rounded-pill bg-gray-600 badge-float badge-float-inside">
+                                    <span class="h6 text-uppercase">
+                                        {% with  n.tag_id.all|first as tag %}{{ tag.name }}{% endwith %}
+                                    </span>
+                                </span>
+                                    {% endif %}
+
+                                    <br>
+                                    <div class="mb-1 text-muted ">{{ n.date |date:"d M" }}</div>
+                                    <h3 class="mb-3 mt-3 text-justify">{{ n.title }}</h3>
+                                {% if n.thumbnail %}
+                                    <div>
+                                        <img src="{{ n.thumbnail.url }}" class="mt-3" height="255">
+                                    </div>
+                                {% endif %}
+
+                                    <p class="card-text mb-auto mt-3 text-justify">{{ n.description }}</p>
+
+                                    <div class="row mt-5">
+                                        <div class="col">
+                                            <a href="{% url 'blog:news_detail' n.id%}" class="text-muted">Подробнее</a>
+                                        </div>
+                                        {% if user.id == n.author_id.id or user.is_superuser %}
+                                            <div class="col">
+                                                <a href="{% url 'blog:news_update' n.id %}" class='myFloat_Right text-muted'>Редактировать</a>
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        {% if page.has_previous or page.has_next %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination mt-5 pt-5">
+                                {% if page.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}">Предыдущая</a></li>
+                                {% endif %}
+                                {% for i in page.paginator.page_range %}
+                                    {% if page.number == i %}
+                                        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href='?page={{ i }}'>{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}">Следующая</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                    </div>
+                    <div class="col-after-ajax">
+                    </div>
+                </div>
+                <div class="col-4 mb-10">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Поиск</span>
+                        <input type="text" class="form-control" id='searchBlock' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+
+                    <div class="list-group mt-5 pt-5">
+                        <h3 class="text-muted align-content-center">Теги</h3>
+                        {% for tag in tags %}
+                            <a href="{% url 'blog:tag_detail' tag.id %}" class="list-group-item list-group-item-action">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block script %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/blog/search.js' %}"></script>
+{% endblock %}

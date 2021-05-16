@@ -1,0 +1,48 @@
+{% extends "header.html" %}
+
+{% block title %}Добавить статью{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section  class="pt-5 pb-5 py-md-10 overlay overlay-black overlay-70">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="col col-md col-lg text-center">
+                    <!-- Heading -->
+                    <h1 class="display-4 fw-bold text-white">
+                        Добавить статью
+                    </h1>
+
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </section>
+
+    <section class="bg-white pt-10 pb-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <form action="{% url 'blog:article_create'%}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                            </div>
+                        {% endif %}
+
+                        {{ form.media }}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-outline-primary mt-5">Добавить</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}

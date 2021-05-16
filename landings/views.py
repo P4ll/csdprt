@@ -1,12 +1,16 @@
-import gspread
 import sys
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from .forms import NorthValleyContactForm
-from django.conf import settings
 from datetime import datetime
+
+import gspread
+from django.conf import settings
 from django.core.mail import send_mail
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
+
+from blog.models import Post
+from csdprt.settings import COUNT_NEWS_MAIN_PAGE
+
+from .forms import NorthValleyContactForm
 
 
 def get_client_ip(request):
@@ -61,8 +65,11 @@ def north_valley(request):
 		print(request.META)
 		return render(request, 'landings/north_valley.html', {'form': form})
 
+
 def enter(request):
 	return render(request, 'landings/enter.html')
 
+
 def index(request):
-	return render(request, 'landings/index.html')
+	posts = Post.objects.filter(type_post_id__title='Новость').order_by('-id')[:COUNT_NEWS_MAIN_PAGE]
+	return render(request, 'landings/index.html', {'posts': posts})

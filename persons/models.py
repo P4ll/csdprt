@@ -1,5 +1,6 @@
-from django.db import models
 from django.core import validators
+from django.db import models
+
 
 class Person(models.Model):
 	person_id = models.AutoField(primary_key=True)
@@ -9,7 +10,7 @@ class Person(models.Model):
 	bio = models.TextField(null=True, blank=True, validators=[validators.MinLengthValidator(10, message="Биография должна быть не короче 10 символов")])
 	email = models.EmailField(null=True, verbose_name="email адрес")
 	publications = models.TextField(null=True, blank=True)
-	photo = models.ImageField(upload_to ='uploads/', null=True, blank=True)
+	photo = models.ImageField(upload_to='uploads/', null=True, blank=True)
 
 	def __str__(self):
 		return f"{self.first_name} {self.patronymic} {self.last_name}"

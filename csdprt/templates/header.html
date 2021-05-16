@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/libs.bundle.css' %}"/>
     <link rel="stylesheet" href="{% static 'assets/css/theme.bundle.css' %}"/>
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/blog.css' %}"/>
 </head>
 <body class="main bg-light" data-aos-easing="ease-out-quad" data-aos-duration="700"
       data-aos-delay="0">
@@ -38,6 +39,12 @@
 
             <!-- Navigation -->
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog:news' %}">
+                        Новости
+                    </a>
+
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarEnrolee" data-bs-toggle="dropdown" href="#"
                        aria-haspopup="true" aria-expanded="false">
@@ -141,20 +148,21 @@
                                             </a>
                                             <a class="dropdown-item" href="https://www.ulstu.ru/main/view/article/1040" target="_blank">
                                                 Официальные адреса и контакты
-                                            </a><br/>
+                                            </a>
+                                            <br/>
 
                                             <!-- Heading -->
-<!--                                            <h6 class="dropdown-header">
-                                                Трудоустройство
-                                            </h6>
+                                            <!--                                            <h6 class="dropdown-header"> <h3 class="pb-3 text-muted" align="center">Комментарии</h3>
+                                                                                            Трудоустройство
+                                                                                        </h6>
 
-                                            <a class="dropdown-item" href="../index.html">
-                                                Открытые вакансии
-                                            </a>
-                                            <a class="dropdown-item" href="../enterprise.html">
-                                                Прохождение практики
-                                            </a>
--->
+                                                                                        <a class="dropdown-item" href="../index.html">
+                                                                                            Открытые вакансии
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="../enterprise.html">
+                                                                                            Прохождение практики
+                                                                                        </a>
+                                            -->
                                         </div>
                                         <div class="col-6">
                                             <!-- Heading -->
@@ -162,29 +170,29 @@
                                                 F.A.Q.
                                             </h6>
 
-<!--
-                                            <a class="dropdown-item" href="../desktop-app.html">
-                                                Командировки
-                                            </a>
-                                            <a class="dropdown-item" href="../mobile-app.html">
-                                                Заказ справок
-                                            </a>
-                                            <a class="dropdown-item" href="../mobile-app.html">
-                                                Общежития
-                                            </a>
-                                            <a class="dropdown-item" href="../mobile-app.html">
-                                                Отчисление
-                                            </a>
-                                            <a class="dropdown-item" href="../mobile-app.html">
-                                                Пересдачи экзаменов / зачетов
-                                            </a>
-                                            <a class="dropdown-item" href="../mobile-app.html">
-                                                Стипендии
-                                            </a>
-                                            <a class="dropdown-item" href="../mobile-app.html">
-                                                Перевод на бюджетную форму
-                                            </a>
--->
+                                            <!--
+                                                                                        <a class="dropdown-item" href="../desktop-app.html">
+                                                                                            Командировки
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="../mobile-app.html">
+                                                                                            Заказ справок
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="../mobile-app.html">
+                                                                                            Общежития
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="../mobile-app.html">
+                                                                                            Отчисление
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="../mobile-app.html">
+                                                                                            Пересдачи экзаменов / зачетов
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="../mobile-app.html">
+                                                                                            Стипендии
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" href="../mobile-app.html">
+                                                                                            Перевод на бюджетную форму
+                                                                                        </a>
+                                            -->
                                         </div>
                                     </div>
                                 </div>
@@ -192,63 +200,63 @@
                         </div> <!-- / .row -->
                     </div>
                 </li>
-<!--
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarAchievements" data-bs-toggle="dropdown" href="#"
-                       aria-haspopup="true" aria-expanded="false">
-                        Достижения
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-xl p-0" aria-labelledby="navbarLandings">
-                        <div class="row gx-0">
-                            <div class="col-12 col-lg-12">
-                                <div class="dropdown-body">
-                                    <div class="row gx-0">
-                                        <div class="col-8">
+                <!--
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarAchievements" data-bs-toggle="dropdown" href="#"
+                                       aria-haspopup="true" aria-expanded="false">
+                                        Достижения
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-xl p-0" aria-labelledby="navbarLandings">
+                                        <div class="row gx-0">
+                                            <div class="col-12 col-lg-12">
+                                                <div class="dropdown-body">
+                                                    <div class="row gx-0">
+                                                        <div class="col-8">
 
-                                            <h6 class="dropdown-header">
-                                                Лаборатории
-                                            </h6>
+                                                            <h6 class="dropdown-header">
+                                                                Лаборатории
+                                                            </h6>
 
-                                            <a class="dropdown-item" href="../coworking.html">
-                                                Спортивное программирование
-                                            </a>
-                                            <a class="dropdown-item" href="../rental.html">
-                                                Робототехника
-                                            </a>
-                                            <a class="dropdown-item" href="../rental.html">
-                                                Искусственный интеллект
-                                            </a>
-                                            <a class="dropdown-item" href="../rental.html">
-                                                IT-Academy Samsung (Интернет вещей)
-                                            </a>
-                                            <a class="dropdown-item" href="../rental.html">
-                                                Huawei (Сети и телекоммуникации)
-                                            </a>
-                                            <br/>
+                                                            <a class="dropdown-item" href="../coworking.html">
+                                                                Спортивное программирование
+                                                            </a>
+                                                            <a class="dropdown-item" href="../rental.html">
+                                                                Робототехника
+                                                            </a>
+                                                            <a class="dropdown-item" href="../rental.html">
+                                                                Искусственный интеллект
+                                                            </a>
+                                                            <a class="dropdown-item" href="../rental.html">
+                                                                IT-Academy Samsung (Интернет вещей)
+                                                            </a>
+                                                            <a class="dropdown-item" href="../rental.html">
+                                                                Huawei (Сети и телекоммуникации)
+                                                            </a>
+                                                            <br/>
 
 
-                                        </div>
-                                        <div class="col-4">
+                                                        </div>
+                                                        <div class="col-4">
 
-                                            <h6 class="dropdown-header">
-                                                Знай наших
-                                            </h6>
+                                                            <h6 class="dropdown-header">
+                                                                Знай наших
+                                                            </h6>
 
-                                            <a class="dropdown-item" href="../desktop-app.html">
-                                                ИТ-компании
-                                            </a>
-                                            <a class="dropdown-item" href="../mobile-app.html">
-                                                Выпускники
-                                            </a>
+                                                            <a class="dropdown-item" href="../desktop-app.html">
+                                                                ИТ-компании
+                                                            </a>
+                                                            <a class="dropdown-item" href="../mobile-app.html">
+                                                                Выпускники
+                                                            </a>
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
--->
+                                </li>
+                -->
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarCourses" data-bs-toggle="dropdown" href="#"
@@ -436,6 +444,8 @@
                                                 <!-- List -->
                                                 <a class="dropdown-item" href="{% url 'accounts:profile_change' %}">Данные
                                                     профиля</a>
+                                                <a class="dropdown-item" href="{% url 'blog:news_admin' %}">Мои новости</a>
+                                                <a class="dropdown-item" href="{% url 'blog:article_admin' %}">Мои статьи</a>
                                                 <a class="dropdown-item" href="{% url 'accounts:password_change' %}">Сменить
                                                     пароль</a>
                                                 <a class="dropdown-item" href="{% url 'accounts:logout' %}">Выйти</a>
@@ -465,18 +475,20 @@
 {#<script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>#}
 <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.bundle.js' %}"></script>
 
+{% block script %}{% endblock %}
+
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-   ym(37866475, "init", {
+    ym(37866475, "init", {
         clickmap:true,
         trackLinks:true,
         accurateTrackBounce:true
-   });
+    });
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/37866475" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
