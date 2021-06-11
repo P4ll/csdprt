@@ -1,0 +1,89 @@
+{% extends 'header.html' %}
+
+{% block content %}
+    <div class="container d-flex align-items-left justify-content-start w-100">
+<!--        {% if messages %}-->
+<!--            <div class="position-relative">-->
+<!--                {% for message in messages %}-->
+<!--                    <p>{{ message }}</p>-->
+<!--                    <a href="{% url "update_resume" %}">Моё резюме</a>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        {% endif %}-->
+
+        <form method="post" class="d-flex justify-content-start align-items-left flex-column w-50 position-relative create_form">
+            <h3>Личная информация</h3>
+            {% load static %}
+            <div class="personal_info_container d-flex">
+                {% load static %}
+                <img src="{% static 'img/placeholder.png' %}" alt="" class="pt-1 vacancies_photo">
+                <div class="without_photo">
+                    <div class="d-flex align-items-center w-100">
+                        <p class="m-2 w-100 text-muted text-center res_fam">
+                            {% if user.last_name %}
+                                {{ user.last_name }}
+                            {% else %}
+                                Нет информации
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center w-100">
+                        <p class="m-2 w-100 text-muted text-center res_name">
+                            {% if user.first_name %}
+                                {{ user.first_name }}
+                            {% else %}
+                                Нет информации
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center w-100">
+                        <p class="m-2 w-100 text-muted text-center res_patr">
+                            {% if user.patronymic %}
+                                {{ user.patronymic }}
+                            {% else %}
+                                Нет информации
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center w-100">
+                        <p class="m-2 w-100 text-muted text-center res_num">
+                            {% if user.phone %}
+                                {{ user.phone }}
+                            {% else %}
+                                Нет информации
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center w-100">
+                        <p class="m-2 w-100 text-muted text-center res_mail">
+                            {% if user.email %}
+                                {{ user.email }}
+                            {% else %}
+                                Нет информации
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div class="d-flex create_form_input align-items-center w-100">
+                    <p class="m-0 w-40">{{ field.label }}</p>
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+            {% for field in form.hidden_fields %}
+                <div class="d-flex w-100">
+                    {{ field }}
+                </div>
+            {% endfor %}
+
+            <div class="container m-3 d-flex justify-content-end">
+                <a class="btn mr-2 save_pdf btn-outline-warning">Сохранить PDF</a>
+                <button type="submit" class="btn mr-2 btn-outline-success">Отправить</button>
+                <a href="{% url "resumes" %}" class="btn btn-outline-primary">Отмена</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

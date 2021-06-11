@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'persons.apps.PersonsConfig',
     'accounts.apps.AccountsConfig',
     'landings.apps.LandingsConfig',
+    'work.apps.WorkConfig',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',

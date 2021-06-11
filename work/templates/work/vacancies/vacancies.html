@@ -1,0 +1,75 @@
+{% extends 'header.html' %}
+{% block title %}Вакансии{% endblock %}
+{% block content %}
+    <div class="v-100 position-relative d-flex flex-wrap bg-light find-block-vacancies find_block">
+        <div class="d-flex inputs_block flex-column align-items-center container container-sm w-50">
+            <h1 class='cs-header-title text-center text-white display-2 find_header'>Найти вакансию</h1>
+            <div class="find_container inputs_block_inputs d-flex justify-content-center w-75 mb-4">
+                {% if parameter %}
+                    <input id="vacText" type="text" placeholder="Поиск по названию" class="form-control find_input mr-2 form-control-lg" value="{{ parameter }}" />
+                {% else %}
+                    <input id="vacText" type="text" placeholder="Поиск по названию" class="form-control find_input mr-2 form-control-lg"/>
+                {% endif %}
+
+                <input id="vacSearch" type="button" value='найти' class=" btn btn-primary find_btn form-control-lg"/>
+            </div>
+
+        </div>
+        <div class="arrows_down">
+            <div class="arrows_down_arrow up">ˬ</div>
+            <div class="arrows_down_arrow down">ˬ</div>
+        </div>
+    </div>
+    <div class="v-100 position-relative flex-column d-flex p-4">
+        <div class='cs-header-title text-center text-black display-6 pl-4'>Текущие вакансии</div>
+        <div class="vacancies_container mt-4 d-flex  flex-wrap ">
+            {% for item in vacancies %}
+            <div class="vacancies_item p-4 m-2 shadow-sm ">
+                <div class="vacancies_item_body">
+                    <h4 class="fl_uppercase">{{ item.title }}</h4>
+                    <p class="w-100">{{ item.firm_name }}</p>
+                    <p>Зарплата: {{ item.salary }}</p>
+                    <p class="w-100">{{ item.requirements }}</p>
+                    <a class="btn btn-outline-primary" href="{{ item.id }}">Посмотреть</a>
+                    <p class="w-100 date_update">Обновлено: {{  item.date_publication }}</p>
+                </div>
+                {% load static %}
+                <div class="photo_container">
+                    <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">
+                </div>
+                
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <!-- Пагинация -->
+    <div class="pagination d-flex mb-3 w-100 d-flex justify-content-center fixed-bottom">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a class="rounded-circle btn btn-outline-primary" href="?page=1">‹‹</a>
+                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.previous_page_number }}"><</a>
+            {% else %}
+                <a class="rounded-circle btn btn-outline-primary" href="?page=1">‹‹</a>
+                <a class="rounded-circle btn btn-outline-primary" href="?page=1"><</a>
+            {% endif %}
+
+            {% for page in page_obj.paginator.page_range %}
+                {% if page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
+                    {% if page == page_obj.number %}
+                        <a class="rounded-circle btn btn-primary" href="?page={{ page }}">{{ page }}</a>
+                    {% else %}
+                        <a class="rounded-circle btn btn-outline-primary" href="?page={{ page }}">{{ page }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class=" rounded-circle btn btn-outline-primary" href="?page={{ page_obj.next_page_number }}">></a>
+                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.paginator.num_pages }}">››</a>
+            {% else %}
+                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.paginator.num_pages }}">></a>
+                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.paginator.num_pages }}">››</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}
