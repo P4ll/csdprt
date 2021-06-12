@@ -45,7 +45,7 @@ def redirect_delete_resumes(request):
 
 
 def get_contacts_resume(request, user_id):
-    """Асинхронка для даты и резюме
+    """Асинхронка для резюме
 
     Отдаёт данные клиенту с номером телефона, именем и почтой
 
@@ -64,6 +64,12 @@ def get_contacts_resume(request, user_id):
 
 
 def get_contacts_vacancies(request, vac_id):
+    """Асинхронка для вакансий
+
+    Отдаёт номер телефона и почту компании пользователю
+
+    vac_id - id вакансии
+    """
     vacancies = VacanciesModel.objects.get(id=vac_id)
     vacancies.counter += 1
     vacancies.save()
@@ -78,8 +84,8 @@ class ResumesView(ListView):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.parameter = None
-        self.object_list = None
+        self.parameter = None  # искомое слово в строке поиска
+        self.object_list = None  # если не объявить, то будет undefined и будет ловить эксепшены
 
     def get(self, request, *args, **kwargs):
         try:
@@ -90,10 +96,10 @@ class ResumesView(ListView):
         context = self.get_context_data()
         return self.render_to_response(context)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            have_resume = ResumesModel.objects.get(client_id_id=self.request.user.id)
+            have_resume = ResumesModel.objects.get(client_id=self.request.user.id)
             context["have_resume"] = True
             context["is_deleted"] = have_resume.is_deleted
         except:
@@ -122,11 +128,11 @@ class ResumesDetail(DetailView):
     def get_queryset(self):
         """
         Проверка на то, что текущий пользователь запрашивает своё резюме. В таком случае
-        возвращается весь queryset, иначе возвращается только с префиксом is_moderated,
+        возвращается толькое его резюме, иначе возвращается только с префиксом is_moderated и !is_deleted,
         чтобы нельзя было получить доступ через адресную строку к не модерированным резюме
         """
-        if os.path.split(self.request.path)[1] == self.request.user.id:
-            return ResumesModel.objects.all()
+        if os.path.split(self.request.path)[1] == str(self.request.user.id):
+            return ResumesModel.objects.filter(client_id=self.request.user.id)
         else:
             return ResumesModel.objects.filter(is_moderated=True, is_deleted=False)
 
@@ -178,7 +184,7 @@ class ResumesUpdate(LoginRequiredMixin, UpdateView):
     template_name = "work/create.html"
 
     def get(self, request, *args, **kwargs):
-        if os.path.split(self.request.path)[1] == self.request.user.id:
+        if os.path.split(self.request.path)[1] == str(self.request.user.id):
             try:
                 ResumesModel.objects.get(client_id=request.user.id)
                 return super().get(request, *args, **kwargs)
@@ -190,6 +196,7 @@ class ResumesUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         this_resume = ResumesModel.objects.get(client_id=self.request.user.id)
         this_resume.is_deleted = False
+        this_resume.is_moderated = False
         this_resume.save()
         return reverse("resumes")
 
@@ -200,7 +207,7 @@ class ResumesDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("resumes")
 
     def get(self, request, *args, **kwargs):
-        if os.path.split(self.request.path)[1] == self.request.user.id:
+        if os.path.split(self.request.path)[1] == str(self.request.user.id):
             try:
                 this_resume = ResumesModel.objects.get(client_id=request.user.id)
                 return super().get(request, *args, **kwargs)
