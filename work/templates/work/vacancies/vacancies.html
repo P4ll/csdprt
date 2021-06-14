@@ -15,10 +15,18 @@
             </div>
 
         </div>
-        <div class="arrows_down">
-            <div class="arrows_down_arrow up">ˬ</div>
-            <div class="arrows_down_arrow down">ˬ</div>
-        </div>
+        
+            <div class="arrows_down">
+                <div class="arrows_down_arrow up">
+                    
+                    <span class="fe fe-chevron-down"></span>
+                </div>
+                <div class="arrows_down_arrow down">
+                    <span class="fe fe-chevron-down"></span>
+                </div>
+                
+            </div>
+        
     </div>
     <div class="v-100 position-relative flex-column d-flex p-4">
         <div class='cs-header-title text-center text-black display-6 pl-4'>Текущие вакансии</div>
@@ -26,7 +34,7 @@
             {% for item in vacancies %}
             <div class="vacancies_item p-4 m-2 shadow-sm ">
                 <div class="vacancies_item_body">
-                    <h4 class="fl_uppercase">{{ item.title }}</h4>
+                    <h4 class="fw-bold fl_uppercase">{{ item.title }}</h4>
                     <p class="w-100">{{ item.firm_name }}</p>
                     <p>Зарплата: {{ item.salary }}</p>
                     <p class="w-100">{{ item.requirements }}</p>
@@ -43,33 +51,24 @@
         </div>
     </div>
     <!-- Пагинация -->
-    <div class="pagination d-flex mb-3 w-100 d-flex justify-content-center fixed-bottom">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a class="rounded-circle btn btn-outline-primary" href="?page=1">‹‹</a>
-                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.previous_page_number }}"><</a>
-            {% else %}
-                <a class="rounded-circle btn btn-outline-primary" href="?page=1">‹‹</a>
-                <a class="rounded-circle btn btn-outline-primary" href="?page=1"><</a>
-            {% endif %}
-
-            {% for page in page_obj.paginator.page_range %}
-                {% if page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
-                    {% if page == page_obj.number %}
-                        <a class="rounded-circle btn btn-primary" href="?page={{ page }}">{{ page }}</a>
-                    {% else %}
-                        <a class="rounded-circle btn btn-outline-primary" href="?page={{ page }}">{{ page }}</a>
-                    {% endif %}
+    {% if page_obj.has_previous or page_obj.has_next %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination mt-5 pt-5">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a></li>
                 {% endif %}
-            {% endfor %}
+                {% for i in page.paginator.page_range %}
+                    {% if page.number == i %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href='?page={{ i }}'>{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
 
-            {% if page_obj.has_next %}
-                <a class=" rounded-circle btn btn-outline-primary" href="?page={{ page_obj.next_page_number }}">></a>
-                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.paginator.num_pages }}">››</a>
-            {% else %}
-                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.paginator.num_pages }}">></a>
-                <a class="rounded-circle btn btn-outline-primary" href="?page={{ page_obj.paginator.num_pages }}">››</a>
-            {% endif %}
-        </span>
-    </div>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
 {% endblock %}
