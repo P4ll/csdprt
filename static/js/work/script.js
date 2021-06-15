@@ -79,16 +79,6 @@ $(document).ready(() => {
             window.location.href = `/work/vacancies/`
         }
     })
-    $('.experience').parent().before(function() {
-        return '<h3> Данные для работодателя </h3>';
-    });
-    
-    $('.specialization').parent().before(function() {
-        return '<h3> Специальность </h3>';
-    });
-    $('.languages').parent().before(function() {
-        return '<h3> Языки </h3>';
-    });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip({placement:'bottom'})
     });

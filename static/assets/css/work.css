@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 .arrows_down *{
-    font-size: 2em;
+    font-size: 1.7em;
     animation: arrow .5s ease-in-out 0s infinite alternate-reverse forwards;
     color: #f1f8fe;
     border-radius: 50%;
@@ -50,12 +50,12 @@ form > * {
 }
 .find_block{
     background-image: url(../img/work/find-block.jpg);
-    background-position: top;
+    background-position: center;
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 70vh;
+    height: 45vh;
 }
 .w-40{
     width:40%;

@@ -2,13 +2,6 @@
 {% block title %}Резюме{% endblock %}
 {% block content %}
     <div class="v-100 position-relative d-flex flex-wrap bg-light find_block">
-        <div class="buttons_resumes">
-            {% if have_resume and not is_deleted %}
-                <a class="btn btn-outline-primary" href="{% url "redirect_to_my_resume" %}">Моё резюме</a>
-            {% else %}
-                <a class="btn btn-outline-primary" href="{% url "create_resume" %}">Создать</a>
-            {% endif %}
-        </div>
 
         <div class="d-flex flex-column inputs_block align-items-center container container-sm w-50">
             <div class='cs-header-title text-center text-white display-2 find_header'>Найти резюме</div>

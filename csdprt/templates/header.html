@@ -481,6 +481,11 @@
                                                 <!-- List -->
                                                 <a class="dropdown-item" href="{% url 'accounts:profile_change' %}">Данные
                                                     профиля</a>
+                                                    {% if have_resume and not is_deleted %}
+                                                        <a class="dropdown-item" href="{% url "redirect_to_my_resume" %}">Моё резюме</a>
+                                                    {% else %}
+                                                        <a class="dropdown-item" href="{% url "create_resume" %}">Создать резюме</a>
+                                                    {% endif %}
                                                 <a class="dropdown-item" href="{% url 'blog:news_admin' %}">Мои новости</a>
                                                 <a class="dropdown-item" href="{% url 'blog:article_admin' %}">Мои статьи</a>
                                                 <a class="dropdown-item" href="{% url 'accounts:password_change' %}">Сменить
