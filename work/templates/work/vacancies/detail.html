@@ -1,23 +1,12 @@
 {% extends "header.html" %}
 
 {% block content %}
-    <!-- <div class="container d-flex flex-column">
-        <p>{{ vacancies.title }}</p>
-        <p>{{ vacancies.firm_name }}</p>
-        <p>Предлагаемая зарплата: {{ vacancies.salary }}</p>
-        <p>Должность: {{ vacancies.position }}</p>
-        <p>{{ vacancies.requirements }}</p>
-        <p>{{ vacancies.working_conditions }}</p>
-        <p>{{ vacancies.address }}</p>
-        <p>{{ vacancies.email }}</p>
-        <p>{{ vacancies.phone }}</p>
-    </div> -->
     <!-- Модальное окно -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Контактная информация</h5>
+                <div class="h3 modal-title" id="exampleModalLabel">Контактная информация</div>
             </div>
             <div class="modal-body">
                 <div class="modal_number_vac">
@@ -40,9 +29,9 @@
         </div>
     </div>
     <div class="container d-flex flex-column align-items-start p-4 bg-light">
-        <h3 class="mb-4 fl_uppercase">{{ vacancies.title }}</h3>
+        <div class="h4 mb-4 fl_uppercase">{{ vacancies.title }}</div>
         <div class="main_info_container d-flex">
-            {% load static %}
+<!--            {% load static %}-->
             <div class="photo_container  photo_container_detail">
                 <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">
             </div>
@@ -53,13 +42,22 @@
                 <p><small class="text-muted">Предлагаемая зарплата:</small> {{ vacancies.salary }}</p>
             </div>
         </div>
-        <p class="w-50 about_you_detail"><small class="text-muted">Требования:</small> {{ vacancies.requirements }}</p>
-        <p class="w-50 about_you_detail"><small class="text-muted">Условия:</small> {{ vacancies.working_conditions }}</p>
+        <p class="w-50 about_you_detail d-flex flex-column mt-4">
+            <small class="text-muted">Требования</small>
+            <span>{{ vacancies.requirements }}</span>
+        </p>
+        <p class="w-50 about_you_detail d-flex flex-column">
+            <small class="text-muted">Условия</small>
+            <span>{{ vacancies.working_conditions }}</span>
+        </p>
         <!-- Кнопка-триггер модального окна -->
         <button type="button" class="get_contact_vac btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Контактная информация
         </button>
-        <small class="w-50 about_you_detail mt-4 d-flex align-items-center text-muted">Просмотров: {{ vacancies.counter }}  <span class="fe pl-4 fe-eye"></span></small>
+        <small class="d-flex align-items-center w-50 about_you_detail mt-4 text-muted">
+            <span class="">Просмотров: {{ vacancies.counter }}&nbsp;</span>
+            <span class="fe fe-eye h-100"></span>
+        </small>
         
         <p><small class="text-muted">Размещено: {{ vacancies.date_publication }}</small></p>
     </div>

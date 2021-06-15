@@ -59,6 +59,7 @@ class VacanciesModel(models.Model):
     trash = models.IntegerField(verbose_name="Оценка вакансии (1 - плохо, 10 - очень хорошо)",
                                 validators=[MaxValueValidator(10), MinValueValidator(1)], default=1)
     counter = models.IntegerField(verbose_name="Просмотрело", blank=True, default=0)
+    # img = models.ImageField(width_field=None, height_field=None, upload_to=None)
 
     class Meta:
         verbose_name = "Вакансию"

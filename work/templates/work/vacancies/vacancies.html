@@ -3,7 +3,7 @@
 {% block content %}
     <div class="v-100 position-relative d-flex flex-wrap bg-light find-block-vacancies find_block">
         <div class="d-flex inputs_block flex-column align-items-center container container-sm w-50">
-            <h1 class='cs-header-title text-center text-white display-2 find_header'>Найти вакансию</h1>
+            <div class='cs-header-title text-center text-white display-2 find_header'>Найти вакансию</div>
             <div class="find_container inputs_block_inputs d-flex justify-content-center w-75 mb-4">
                 {% if parameter %}
                     <input id="vacText" type="text" placeholder="Поиск по названию" class="form-control find_input mr-2 form-control-lg" value="{{ parameter }}" />
@@ -29,12 +29,12 @@
         
     </div>
     <div class="v-100 position-relative flex-column d-flex p-4">
-        <div class='cs-header-title text-center text-black display-6 pl-4'>Текущие вакансии</div>
+        <div class='cs-header-title text-center text-black h3 pl-4'>Текущие предложения</div>
         <div class="vacancies_container mt-4 d-flex  flex-wrap ">
             {% for item in vacancies %}
             <div class="vacancies_item p-4 m-2 shadow-sm ">
                 <div class="vacancies_item_body">
-                    <h4 class="fw-bold fl_uppercase">{{ item.title }}</h4>
+                    <div class="fw-bold fl_uppercase">{{ item.title }}</div>
                     <p class="w-100">{{ item.firm_name }}</p>
                     <p>Зарплата: {{ item.salary }}</p>
                     <p class="w-100">{{ item.requirements }}</p>

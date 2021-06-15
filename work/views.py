@@ -186,7 +186,7 @@ class ResumesUpdate(LoginRequiredMixin, UpdateView):
     def get(self, request, *args, **kwargs):
         if os.path.split(self.request.path)[1] == str(self.request.user.id):
             try:
-                ResumesModel.objects.get(client_id=request.user.id)
+                ResumesModel.objects.filter(client_id=request.user.id)
                 return super().get(request, *args, **kwargs)
             except Exception as e:
                 return redirect(reverse("resumes"))
@@ -197,6 +197,7 @@ class ResumesUpdate(LoginRequiredMixin, UpdateView):
         this_resume = ResumesModel.objects.get(client_id=self.request.user.id)
         this_resume.is_deleted = False
         this_resume.is_moderated = False
+        this_resume.counter = 0
         this_resume.save()
         return reverse("resumes")
 
@@ -221,6 +222,7 @@ class ResumesDelete(LoginRequiredMixin, DeleteView):
         this_resume = ResumesModel.objects.get(client_id=request.user.id)
         this_resume.is_deleted = True
         this_resume.is_moderated = False
+        this_resume.counter = 0
         this_resume.save()
         return redirect(success_url)
 

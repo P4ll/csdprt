@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Контактная информация</h5>
+                <div class="h3 modal-title" id="exampleModalLabel">Контактная информация</div>
             </div>
             <div class="modal-body">
                 <div class="modal_name_resume">
@@ -40,25 +40,33 @@
                 <a class="btn m-2 btn-outline-primary" href="{% url "delete_resume" %}">Удалить резюме</a>
             </div>
         {% endif %}
-        <h3 class="mb-4 fl_uppercase">{{ resumesmodel.title }}</h3>
+        <div class="mb-4 fl_uppercase h3">{{ resumesmodel.title }}</div>
         <div class="main_info_container d-flex">
             {% load static %}
             <div class="photo_container  photo_container_detail">
                 <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">
             </div>
             <div class="main_info_txt  pl-4">
-                <p><small class="text-muted">Ключевые навыки:</small> {{ resumesmodel.hard_skills }}</p>
+                <p><small class="text-muted">Специализация:</small> {{ resumesmodel.specialization }}</p>
                 <p><small class="text-muted">Опыт работы:</small> {{ resumesmodel.work_experience }}</p>
+                <p><small class="text-muted">Желаемая заробатная плата:</small> {{ resumesmodel.desired_salary }}</p>
+                <p><small class="text-muted">Ключевые навыки:</small> {{ resumesmodel.hard_skills }}</p>
                 <p><small class="text-muted">Основной язык:</small> {{ resumesmodel.native_language }}</p>
                 <p><small class="text-muted">Второй язык:</small> {{ resumesmodel.foreign_language }}</p>
             </div>
         </div>
-        <p class="w-50 about_you_detail"><small class="text-muted">О себе:</small> {{ resumesmodel.about_you }}</p>
+        <p class="w-100 about_you_detail d-flex flex-column mt-2">
+            <small class="text-muted">О себе</small>
+            <span>{{ resumesmodel.about_you }}</span>
+        </p>
         <!-- Кнопка-триггер модального окна -->
         <button type="button" class="get_contact_resume btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Контактная информация
         </button>
-        <small class="w-50 about_you_detail mt-4 d-flex align-items-center text-muted">Просмотров: {{ resumesmodel.counter }}  <span class="fe pl-4 fe-eye"></span></small>
+        <small class="w-50 about_you_detail mt-4 d-flex align-items-center text-muted">
+            <span>Просмотров: {{ resumesmodel.counter }}&nbsp;</span>
+            <span class="fe pl-4 fe-eye"></span>
+        </small>
         
         <p><small class="text-muted">Обновлено: {{ resumesmodel.date_update }}</small></p>
     </div>
