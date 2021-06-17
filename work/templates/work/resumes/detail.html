@@ -43,6 +43,15 @@
         <div class="mb-4 fl_uppercase h3">{{ resumesmodel.title }}</div>
         <div class="main_info_container d-flex">
             {% load static %}
+<!--            {% if resumesmodel.client_id.photo %}-->
+<!--                <div class="photo_container  photo_container_detail">-->
+<!--                    <img src="{{ resumesmodel.client_id.photo }}" alt="" class="vacancies_photo">-->
+<!--                </div>-->
+<!--            {% else %}-->
+<!--                <div class="photo_container  photo_container_detail">-->
+<!--                    <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">-->
+<!--                </div>-->
+<!--            {% endif %}-->
             <div class="photo_container  photo_container_detail">
                 <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">
             </div>

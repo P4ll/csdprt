@@ -31,7 +31,15 @@
     <div class="container d-flex flex-column align-items-start p-4 bg-light">
         <div class="h4 mb-4 fl_uppercase">{{ vacancies.title }}</div>
         <div class="main_info_container d-flex">
-<!--            {% load static %}-->
+<!--            {% if vacancies.photo %}-->
+<!--                <div class="photo_container  photo_container_detail">-->
+<!--                    <img src="{{ vacancies.photo }}" alt="" class="vacancies_photo">-->
+<!--                </div>-->
+<!--            {% else %}-->
+<!--                <div class="photo_container  photo_container_detail">-->
+<!--                    <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">-->
+<!--                </div>-->
+<!--            {% endif %}-->
             <div class="photo_container  photo_container_detail">
                 <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">
             </div>

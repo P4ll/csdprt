@@ -21,7 +21,7 @@ SECRET_KEY = "asd" #get_random_secret_key()#os.getenv("DJANGO_SECRET_KEY", get_r
 # DEBUG = os.getenv("DEBUG", "False") == "True"
 DEBUG = "True"
 # DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-DEVELOPMENT_MODE = "False"
+DEVELOPMENT_MODE = "True"
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "0.0.0.0,localhost").split(",")
 ALLOWED_HOSTS = ['*']
@@ -145,18 +145,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_URL = '/static/'
-STATIC_ROOT = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
-# STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
-# if DEVELOPMENT_MODE:
-#     STATICFILES_DIRS = [
-#         os.path.join(BASE_DIR, "static/"),
-#     ]
-# else:
-#     STATIC_ROOT = 'static/'#os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "static"))
+
+# Если не подключаются файлы из статика
+# STATIC_URL = '/static/'
+# STATIC_ROOT = 'static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
+if DEVELOPMENT_MODE:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static/"),
+    ]
+else:
+    STATIC_ROOT = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "static"))
 
 print('DEVELOPMENT_MODE', DEVELOPMENT_MODE, BASE_DIR, STATIC_URL)
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")

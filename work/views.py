@@ -1,8 +1,3 @@
-"""
-Author
-Maxim Umyvalkin <maximkostenko123@gmail.com>
-"""
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, HttpResponseRedirect, redirect, HttpResponse
 from django.views.generic import ListView, DeleteView, UpdateView, CreateView, DetailView
@@ -31,8 +26,7 @@ def redirect_to_my_resume(request):
 
 def redirect_update_resumes(request):
     """
-    Защищённый редирект на обновление данных, где при независящих
-    от пользователя обстоятельств - юзера перекинет всегда на его резюме
+    Защищённый редирект на update своего резюме
     """
     return redirect(reverse("update_my_resume", kwargs={"pk": request.user.id}))
 
@@ -47,7 +41,7 @@ def redirect_delete_resumes(request):
 def get_contacts_resume(request, user_id):
     """Асинхронка для резюме
 
-    Отдаёт данные клиенту с номером телефона, именем и почтой
+    Отдаёт данные клиенту с номером телефона, именем и почтой + каунтит просмотры
 
     user_id - id пользователя, от которого нужно получить данные
 
@@ -66,7 +60,7 @@ def get_contacts_resume(request, user_id):
 def get_contacts_vacancies(request, vac_id):
     """Асинхронка для вакансий
 
-    Отдаёт номер телефона и почту компании пользователю
+    Отдаёт номер телефона и почту компании пользователю + каунтит просмотры
 
     vac_id - id вакансии
     """
@@ -88,6 +82,10 @@ class ResumesView(ListView):
         self.object_list = None  # если не объявить, то будет undefined и будет ловить эксепшены
 
     def get(self, request, *args, **kwargs):
+        """Переопределённый get
+
+        В parameter попадает искомое слово или None
+        """
         try:
             self.parameter = request.GET["find"]
         except:
@@ -97,6 +95,11 @@ class ResumesView(ListView):
         return self.render_to_response(context)
 
     def get_context_data(self, *args, **kwargs):
+        """Переопределённый контекст
+
+        Искомое слово попадёт обратно в строку поиска.
+        Если резюме удалено, то
+        """
         context = super().get_context_data(**kwargs)
         try:
             have_resume = ResumesModel.objects.get(client_id=self.request.user.id)
@@ -218,6 +221,10 @@ class ResumesDelete(LoginRequiredMixin, DeleteView):
             return redirect(reverse("delete_resume"))
 
     def delete(self, request, *args, **kwargs):
+        """
+        Переопределение delete, чтобы вместо обычного удаления происходило
+        изменение флага is_deleted на True, со сбросом флага модерации и каунтера
+        """
         success_url = self.get_success_url()
         this_resume = ResumesModel.objects.get(client_id=request.user.id)
         this_resume.is_deleted = True
