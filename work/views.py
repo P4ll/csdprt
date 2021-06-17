@@ -84,7 +84,8 @@ class ResumesView(ListView):
     def get(self, request, *args, **kwargs):
         """Переопределённый get
 
-        В parameter попадает искомое слово или None
+        В parameter попадает искомое слово или None, по нему же будет
+        выполняться поиск в get_queryset
         """
         try:
             self.parameter = request.GET["find"]
@@ -97,8 +98,8 @@ class ResumesView(ListView):
     def get_context_data(self, *args, **kwargs):
         """Переопределённый контекст
 
-        Искомое слово попадёт обратно в строку поиска.
-        Если резюме удалено, то
+        Искомое слово попадёт обратно в строку поиска (parameter)
+        Добавленные have_resume и is_deleted нужны для обработки меню (либо создать, либо посмотреть)
         """
         context = super().get_context_data(**kwargs)
         try:
@@ -112,6 +113,10 @@ class ResumesView(ListView):
         return context
 
     def get_queryset(self):
+        """
+        Если было передано слово для поиска, то поиск будет выполнен по нему, иначе вернётся
+        весь набор данных, который не удалён и был одобрен модератором
+        """
         if self.parameter:
             return ResumesModel.objects.filter(is_moderated=True, is_deleted=False).filter(title__contains=self.parameter)
         else:
@@ -123,6 +128,9 @@ class ResumesDetail(DetailView):
     template_name = "work/resumes/detail.html"
 
     def get_context_data(self, **kwargs):
+        """
+        Добавление в контекст данных о пользователе, резюме которого сейчас просматривают
+        """
         context = super().get_context_data(**kwargs)
         this_id = int(os.path.split(self.request.path)[1])
         context["this_user"] = AdvUser.objects.get(id=this_id)
@@ -150,6 +158,10 @@ class ResumesCreate(LoginRequiredMixin, CreateView):
         self.object = None
 
     def get(self, request, *args, **kwargs):
+        """
+        Если у пользователя есть резюме, то его перебросит на обновление, иначе
+        вернётся страница с созданием
+        """
         try:
             ResumesModel.objects.get(client_id=request.user.id)
             return redirect(reverse("update_resume"))
@@ -157,6 +169,9 @@ class ResumesCreate(LoginRequiredMixin, CreateView):
             return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        """
+        Переопределение для дебага
+        """
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)
@@ -164,11 +179,18 @@ class ResumesCreate(LoginRequiredMixin, CreateView):
             return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
+        """
+        Добавление в контекст данных о пользователе, который делает запрос
+        """
         context = super().get_context_data(**kwargs)
         context["user"] = AdvUser.objects.get(id=self.request.user.id)
         return context
 
     def get_form_kwargs(self):
+        """
+        Корректировка данных, отправленных пользователем (одновременно ещё и защита)
+        Приводит название в нижний регистр и подставляет id пользователя, который делает запрос
+        """
         kwargs = super().get_form_kwargs()
         if self.request.method == "POST" and hasattr(self, 'object'):
             data = kwargs["data"].dict()
@@ -187,16 +209,25 @@ class ResumesUpdate(LoginRequiredMixin, UpdateView):
     template_name = "work/create.html"
 
     def get(self, request, *args, **kwargs):
+        """
+        Если id запроса и id отправителя совпадают, то идёт проверка на то, есть ли
+        у пользователя резюме: если есть, то вернётся страница с обновлением, иначе
+        произойдёт редирект на создание резюме. В противном случае, будет попытка подставить
+        перейти на резюме пользователя (url update_resume)
+        """
         if os.path.split(self.request.path)[1] == str(self.request.user.id):
-            try:
-                ResumesModel.objects.filter(client_id=request.user.id)
+            if ResumesModel.objects.filter(client_id=request.user.id):
                 return super().get(request, *args, **kwargs)
-            except Exception as e:
-                return redirect(reverse("resumes"))
+            else:
+                return redirect(reverse("create_resume"))
         else:
             return redirect(reverse("update_resume"))
 
     def get_success_url(self):
+        """
+        Не самое лучшее решение в плане эстетики, но перед самим получением url`а
+        происходит сброс флагов is_deleted и is_moderated, вместе со счётчиком
+        """
         this_resume = ResumesModel.objects.get(client_id=self.request.user.id)
         this_resume.is_deleted = False
         this_resume.is_moderated = False
@@ -211,11 +242,16 @@ class ResumesDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("resumes")
 
     def get(self, request, *args, **kwargs):
+        """
+        Если id в поиске и id отправителя совпадают, то идёт проверка, что у последнего
+        есть недалённое резюме. Если есть, то вернёт страницу удаления, иначе произойдёт редирект
+        на страницу со всеми резюме. В противном случае будет произведена попытка редиректа на страницу
+        с удалением именно его резюме
+        """
         if os.path.split(self.request.path)[1] == str(self.request.user.id):
-            try:
-                this_resume = ResumesModel.objects.get(client_id=request.user.id)
+            if ResumesModel.objects.filter(client_id=request.user.id, is_deleted=False):
                 return super().get(request, *args, **kwargs)
-            except Exception as e:
+            else:
                 return redirect(reverse("resumes"))
         else:
             return redirect(reverse("delete_resume"))
@@ -255,6 +291,9 @@ class VacanciesView(ListView):
         self.parameter = None
 
     def get(self, request, *args, **kwargs):
+        """
+        Переопределение метода с захватом слова для поиска в списке вакансий
+        """
         try:
             self.parameter = request.GET["find"]
         except:
@@ -264,11 +303,19 @@ class VacanciesView(ListView):
         return self.render_to_response(context)
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        В контекст передаётся само слово, которое писал пользователь, чтобы в последствии
+        вставить его в строку поиска
+        """
         context = super().get_context_data(**kwargs)
         context["parameter"] = self.parameter
         return context
 
     def get_queryset(self):
+        """
+        Если было дано слово/а для поиска, то поиск будет выполнен именно по ним,
+        иначе вернутся все существующие вакансии
+        """
         if self.parameter:
             return VacanciesModel.objects.filter(title__contains=self.parameter)
         else:
