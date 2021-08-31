@@ -134,7 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # v. 1
-# STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
+STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
 # if DEVELOPMENT_MODE:
 #     STATICFILES_DIRS = [
 #         os.path.join(BASE_DIR, "static/"),
@@ -149,14 +149,14 @@ if DEVELOPMENT_MODE:
     ]
 #    STATIC_ROOT = os.path.join(BASE_DIR, "static")
     STATIC_URL = os.path.join(BASE_DIR, "/static/")
+    MEDIA_URL = '/uploads/'
 else:
-    STATIC_ROOT = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "static"))
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
     STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
-
+    MEDIA_URL = 'http://staticfist.simcase.ru/'
 print('DEVELOPMENT_MODE', DEVELOPMENT_MODE, BASE_DIR, STATIC_URL)
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")
-MEDIA_URL = '/uploads/'
-
+#MEDIA_URL = 'http://staticfist.simcase.ru/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
