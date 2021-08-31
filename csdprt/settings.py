@@ -22,7 +22,6 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 #DEBUG  = "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 #DEVELOPMENT_MODE = "True"
- ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "0.0.0.0,localhost").split(",")
 ALLOWED_HOSTS = ['*']
 
