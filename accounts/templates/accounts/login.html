@@ -1,15 +1,50 @@
 {% extends "header.html" %}
+{% load bootstrap4 %}
 {% block title %} Вход {% endblock %}
 {% block content %}
-<h2>Вход</h2>
-{% if user.is_authenticated %}
-<p>Вход был выполнен.</p>
-{% else %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="text" value="{{ next }}">
-    <input type="submit" value="Войти">
-</form>
-{% endif %}
+
+<header class="bg-dark pt-9 pb-11 d-none d-md-block">
+    <div class="container-md">
+        <div class="row align-items-center">
+            <div class="col">
+
+                <!-- Heading -->
+                <h1 class="fw-bold text-white mb-2">
+                    Вход на сайт
+                </h1>
+
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</header>
+
+<div class="container-md">
+    <div class="row">
+        <div class="col-12 col-md-9">
+            <div class="card card-bleed shadow-light-lg mb-6">
+                <div class="card card-bleed shadow-light-lg mb-6">
+                    <div class="card-body">
+
+                        {% if user.is_authenticated %}
+                        <p>Вход был выполнен.</p>
+                        {% else %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {% bootstrap_form form layout='horizontal' %}
+                            <!--                            {{ form.as_p }}-->
+
+                            <input type="hidden" name="text" value="{{ next }}">
+                            {% buttons submit='Войти' %}{% endbuttons %}
+                        </form>
+
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock%}
