@@ -1,0 +1,67 @@
+{% extends "header.html" %}
+
+{% block title %}Мои новости{% endblock %}
+{% load static %}
+{% block content %}
+
+   <header class="bg-dark pt-9 pb-11 d-none d-md-block">
+    <div class="container-md">
+        <div class="row align-items-center">
+            <div class="col text-center">
+
+                <!-- Heading -->
+                <h1 class="fw-bold text-white mb-2">
+                    Мои Новости
+                </h1>
+
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</header>
+
+    <section class="bg-white pt-10 pb-10">
+        <div class="container">
+            {% if posts|length %}
+                <a class="btn btn-outline-secondary btn-block btn-sm" href="{% url 'blog:news_create' %}">Добавить</a>
+
+                <div class="table-responsive mt-3 text-center">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Название</th>
+                            <th>Дата</th>
+                            <th>Комментариев</th>
+                            <th>Редактировать</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for post in posts %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'blog:news_detail' post.id %}">{{ post.title }}</a> </td>
+                                <td>{{ post.date }}</td>
+                                <td><a href="{% url 'blog:comment' post.id %}">{{ post.comments }}</a></td>
+                                <td><a class="btn btn-outline-primary btn-block btn-sm" href="{% url 'blog:news_update' post.id %}">Редактировать</a></td>
+                                <td><a class="btn btn-outline-danger btn-block btn-sm" href="{% url 'blog:news_delete' post.id %}">Удалить</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="col text-center" >
+                    <p align="center">Создайте свою первую новость</p>
+                    <a class="btn btn-outline-secondary btn-block btn-sm" href="{% url 'blog:news_create' %}">Добавить</a>
+                </div>
+            {% endif %}
+        </div>
+
+        </div>
+    </section>
+
+
+
+{% endblock %}

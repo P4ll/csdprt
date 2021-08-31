@@ -1,8 +1,8 @@
 from django import forms
-from .models import AdvUser
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
-from .models import user_registrated
+
+from .models import AdvUser, user_registrated
 
 
 class ChangeUserinfoForm(forms.ModelForm):

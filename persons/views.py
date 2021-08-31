@@ -1,13 +1,13 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import Person, Course
-from django.template import loader
-from django.shortcuts import render
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView
-from django.urls import reverse_lazy
-from .forms import CourseForm
 from django.contrib.auth.models import Permission
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.template import loader
+from django.urls import reverse_lazy
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from .forms import CourseForm
+from .models import Course, Person
 
 
 def get_user_permissions(user):

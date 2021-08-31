@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, User
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.dispatch import Signal
+
 from .utilities import send_activation_notification
 
 
@@ -13,6 +13,7 @@ class AdvUser(AbstractUser):
 
     class Meta(AbstractUser.Meta):
         pass
+
 
 user_registrated = Signal(providing_args=['instance'])
 

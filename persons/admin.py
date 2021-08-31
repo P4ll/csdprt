@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from persons.models import *
+
 
 class PersonAdmin(admin.ModelAdmin) :
     list_display = ('person_id', 'first_name', 'patronymic', 'last_name')

@@ -1,11 +1,10 @@
 import os
 import sys
-import django
 from pathlib import Path
+
 import dj_database_url
+import django
 from django.core.management.utils import get_random_secret_key
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,10 +17,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = get_random_secret_key()#os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-
+# DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG  = "True"
+# DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+DEVELOPMENT_MODE = "True"
+# ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+# ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "0.0.0.0,localhost").split(",")
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'captcha',
+
+    'blog.apps.BlogConfig',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +75,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'csdprt.wsgi.application'
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}
 
+"""
 if DEVELOPMENT_MODE is True:
     DATABASES = {
         "default": {
@@ -88,6 +101,7 @@ else:
             "PORT": os.environ.get("SQL_PORT", "5432"),
         }
     }
+"""
 # elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
 #     if os.getenv("DATABASE_URL", None) is None:
 #         raise Exception("DATABASE_URL environment variable not defined")
@@ -159,3 +173,5 @@ SERVER_EMAIL='k.svyatov@ulstu.ru'
 NORTH_VALLEY_SHEET_NAME = "digital valley leads"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
 django.setup()
+
+COUNT_NEWS_MAIN_PAGE = 4
