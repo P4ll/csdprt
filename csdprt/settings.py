@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'persons.apps.PersonsConfig',
     'accounts.apps.AccountsConfig',
     'landings.apps.LandingsConfig',
-    'work.apps.WorkConfig',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'captcha',
     'blog.apps.BlogConfig',
+    'work.apps.WorkConfig',
     'ckeditor'
 ]
 
@@ -147,7 +147,7 @@ if DEVELOPMENT_MODE:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static/"),
     ]
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+#    STATIC_ROOT = os.path.join(BASE_DIR, "static")
     STATIC_URL = os.path.join(BASE_DIR, "/static/")
 else:
     STATIC_ROOT = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "static"))
