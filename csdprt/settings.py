@@ -14,11 +14,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_random_secret_key()#os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+# get_random_secret_key корраптит сессии при каждом релоаде сервера
+SECRET_KEY = "asd" #get_random_secret_key()#os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv("DEBUG", "False") == "True"
-DEBUG  = "True"
+DEBUG = "True"
 # DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 DEVELOPMENT_MODE = "True"
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
     'persons.apps.PersonsConfig',
     'accounts.apps.AccountsConfig',
     'landings.apps.LandingsConfig',
+    'work.apps.WorkConfig',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,13 +147,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
+# v. 1
+# STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
+# if DEVELOPMENT_MODE:
+#     STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, "static/"),
+#     ]
+# else:
+#     STATIC_ROOT = 'static/'#os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "static"))
+
+# v. 2
 if DEVELOPMENT_MODE:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static/"),
     ]
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATIC_URL = os.path.join(BASE_DIR, "/static/")
 else:
-    STATIC_ROOT = 'static/'#os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "static"))
+    STATIC_ROOT = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "static"))
+    STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
 
 print('DEVELOPMENT_MODE', DEVELOPMENT_MODE, BASE_DIR, STATIC_URL)
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")

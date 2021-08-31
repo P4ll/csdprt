@@ -1,0 +1,72 @@
+{% extends "header.html" %}
+{% block title %}Резюме{% endblock %}
+{% block content %}
+    <div class="v-100 position-relative d-flex flex-wrap bg-light find_block">
+
+        <div class="d-flex flex-column inputs_block align-items-center container container-sm w-50">
+            <div class='cs-header-title text-center text-white display-2 find_header'>Найти резюме</div>
+            <div class="find_container inputs_block_inputs d-flex justify-content-center w-75 mb-4">
+                {% if parameter %}
+                    <input id="textForSearch" type="text" placeholder="Поиск по названию" class="form-control find_input mr-2 form-control-lg" value="{{ parameter }}"/>
+                {% else %}
+                    <input id="textForSearch" type="text" placeholder="Поиск по названию" class="form-control find_input mr-2 form-control-lg"/>
+                {% endif %}
+                <input id="btnSearch" type="button" value='найти' class=" btn btn-primary find_btn form-control-lg"/>
+            </div>
+
+        </div>
+        <div class="arrows_down">
+            <div class="arrows_down_arrow up">
+                
+                <span class="fe fe-chevron-down"></span>
+            </div>
+            <div class="arrows_down_arrow down">
+                <span class="fe fe-chevron-down"></span>
+            </div>
+            
+        </div>
+    </div>
+    <div class="v-100 position-relative flex-column d-flex p-sm-2 p-4">
+        <div class='cs-header-title text-center text-black h3 pl-4'>Текущие резюме</div>
+        <div class="vacancies_container position-relative mt-4 d-flex  flex-wrap ">
+            {% for resume in resumes %}
+                <div class="vacancies_item p-4 m-2 shadow-sm ">
+                    <div class="vacancies_item_body">
+                        <div class="h4 fw-bold fl_uppercase">{{ resume.title }}</div>
+                        <p class="w-100 about_you">О себе: {{ resume.about_you }}</p>
+                        <p class="w-100">Желаемая зарплата: {{ resume.desired_salary }}</p>
+                        <p class="w-100">Специализация: {{ resume.specialization }}</p>
+                        <p class="w-100">Опыт работы: {{ resume.work_experience }}</p>
+                        <a class="btn btn-outline-primary mb-4" href="{% url "check_resume" resume.pk %}">Посмотреть</a>
+                        <p class="w-100 date_update">Обновлено: {{ resume.date_update }}</p>
+                    </div>
+                    {% load static %}
+                    <div class="photo_container">
+                        <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Пагинация -->
+    {% if page_obj.has_previous or page_obj.has_next %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination mt-5 pt-5">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a></li>
+                {% endif %}
+                {% for i in page.paginator.page_range %}
+                    {% if page.number == i %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href='?page={{ i }}'>{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "header.html" %}
+
+{% block content %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="h3 modal-title" id="exampleModalLabel">Контактная информация</div>
+            </div>
+            <div class="modal-body">
+                <div class="modal_name_resume">
+                    <p><strong>Имя</strong></p>
+                    <p class="lead">
+                        Загрузка...
+                    </p>
+                </div>
+                <div class="modal_number_resume">
+                    <p><strong>Номер телефона</strong></p>
+                    <p class="lead">
+                        Загрузка...
+                    </p>
+                </div>
+                <div class="modal_email_resume">
+                    <p><strong>E-mail</strong></p>
+                    <p class="lead">
+                        Загрузка...
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="container d-flex flex-column align-items-start p-4 bg-light">
+        {% if request.user.id == this_user.id %}
+            <div class="edit_buttons w-100 d-flex justify-content-end">
+                <a class="btn m-2 btn-outline-primary" href="{% url "update_resume" %}">Изменить резюме</a>
+                <a class="btn m-2 btn-outline-primary" href="{% url "delete_resume" %}">Удалить резюме</a>
+            </div>
+        {% endif %}
+        <div class="mb-4 fl_uppercase h3">{{ resumesmodel.title }}</div>
+        <div class="main_info_container d-flex">
+            {% load static %}
+<!--            {% if resumesmodel.client_id.photo %}-->
+<!--                <div class="photo_container  photo_container_detail">-->
+<!--                    <img src="{{ resumesmodel.client_id.photo }}" alt="" class="vacancies_photo">-->
+<!--                </div>-->
+<!--            {% else %}-->
+<!--                <div class="photo_container  photo_container_detail">-->
+<!--                    <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">-->
+<!--                </div>-->
+<!--            {% endif %}-->
+            <div class="photo_container  photo_container_detail">
+                <img src="{% static 'img/placeholder.png' %}" alt="" class="vacancies_photo">
+            </div>
+            <div class="main_info_txt  pl-4">
+                <p><small class="text-muted">Специализация:</small> {{ resumesmodel.specialization }}</p>
+                <p><small class="text-muted">Опыт работы:</small> {{ resumesmodel.work_experience }}</p>
+                <p><small class="text-muted">Желаемая заробатная плата:</small> {{ resumesmodel.desired_salary }}</p>
+                <p><small class="text-muted">Ключевые навыки:</small> {{ resumesmodel.hard_skills }}</p>
+                <p><small class="text-muted">Основной язык:</small> {{ resumesmodel.native_language }}</p>
+                <p><small class="text-muted">Второй язык:</small> {{ resumesmodel.foreign_language }}</p>
+            </div>
+        </div>
+        <p class="w-100 about_you_detail d-flex flex-column mt-2">
+            <small class="text-muted">О себе</small>
+            <span>{{ resumesmodel.about_you }}</span>
+        </p>
+        <!-- Кнопка-триггер модального окна -->
+        <button type="button" class="get_contact_resume btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Контактная информация
+        </button>
+        <small class="w-50 about_you_detail mt-4 d-flex align-items-center text-muted">
+            <span>Просмотров: {{ resumesmodel.counter }}&nbsp;</span>
+            <span class="fe pl-4 fe-eye"></span>
+        </small>
+        
+        <p><small class="text-muted">Обновлено: {{ resumesmodel.date_update }}</small></p>
+    </div>
+{% endblock %}
