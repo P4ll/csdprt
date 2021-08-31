@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'captcha',
 
     'blog.apps.BlogConfig',
     'ckeditor'
@@ -173,4 +174,4 @@ NORTH_VALLEY_SHEET_NAME = "digital valley leads"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
 django.setup()
 
-COUNT_NEWS_MAIN_PAGE = 2
+COUNT_NEWS_MAIN_PAGE = 4

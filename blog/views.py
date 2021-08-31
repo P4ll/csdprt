@@ -75,7 +75,12 @@ class CommentView(LoginRequiredMixin, View):
             news = Post.objects.get(id=id)
             comments = Comment.objects.filter(post_id=news)
             error = form.errors
-            form = CommentForm
+            try:
+                if error['captcha'][0] == 'Неверный ответ':
+                    error = 'Неверно введены символы с картинки'
+            except: pass
+            form = CommentForm(request.POST, instance=comment)
+
             return render(request, 'blog/news/detail.html', {'news': news, 'form': form, 'error': error,
                                                              'comments': comments})
 

@@ -4,6 +4,9 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 from blog.models import Comment, Post, TypePost
+from captcha.fields import CaptchaField
+
+from blog.services import get_change_color_text
 
 
 class ImagePreviewWidget(forms.widgets.FileInput):
@@ -24,6 +27,9 @@ class PostForm(forms.ModelForm):
         post.date = date.today()
         post.type_post_id = TypePost.objects.get(title='Новость')
         if commit:
+            title = self.cleaned_data['title']
+            text = self.cleaned_data['text']
+            post.text = get_change_color_text(title, text)
             post.save()
             self.save_m2m()
 
@@ -55,6 +61,7 @@ class ArticleForm(forms.ModelForm):
         post.date = date.today()
         post.type_post_id = TypePost.objects.get(title='Статья')
         if commit:
+
             post.save()
             self.save_m2m()
 
@@ -80,6 +87,8 @@ class ArticleForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    captcha = CaptchaField(label='Введите код с картинки')
+
     def save(self, commit=True):
         post = super().save(commit=False)
         post.date = date.today()

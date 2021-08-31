@@ -37,15 +37,55 @@ body.main{
 }
 
 .flex-box {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 .myFloat_Right {
     float: right;
 }
 
 .equal {
-  display: flex;
-  display: -webkit-flex;
-  flex-wrap: wrap;
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+}
+
+.custom-text-for-news{
+    color: #0422bb;
+}
+
+.leftimg {
+    float:left; /* Выравнивание по левому краю */
+    margin: 15px 15px 15px 0; /* Отступы вокруг картинки */
+}
+
+.custom-header{
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+
+#id_captcha_1{
+    display: block;
+    width: 100%;
+    padding: .8125rem 1.25rem;
+    font-size: 1.0625rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #161c2d;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #f1f4f8;
+    appearance: none;
+    border-radius: .375rem;
+    box-shadow: none;
+    transition: border-color .15s
+}
+
+.captcha {
+    display: block;
+    margin-top: 1rem;
+    width: 8rem;
+    margin-bottom: 1rem;
+}
+.errorlist{
+    display: none;
 }
