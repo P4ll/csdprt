@@ -1,7 +1,6 @@
 import os
 import sys
 from pathlib import Path
-
 import dj_database_url
 import django
 from django.core.management.utils import get_random_secret_key
@@ -19,9 +18,7 @@ SECRET_KEY = "asd" #get_random_secret_key()#os.getenv("DJANGO_SECRET_KEY", get_r
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
-#DEBUG  = "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-#DEVELOPMENT_MODE = "True"
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "0.0.0.0,localhost").split(",")
 ALLOWED_HOSTS = ['*']
 
@@ -41,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'captcha',
-
     'blog.apps.BlogConfig',
     'ckeditor'
 ]
@@ -76,14 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'csdprt.wsgi.application'
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
-
-"""
 if DEVELOPMENT_MODE is True:
     DATABASES = {
         "default": {
@@ -102,7 +90,6 @@ else:
             "PORT": os.environ.get("SQL_PORT", "5432"),
         }
     }
-"""
 # elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
 #     if os.getenv("DATABASE_URL", None) is None:
 #         raise Exception("DATABASE_URL environment variable not defined")

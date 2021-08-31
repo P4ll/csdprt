@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  webcs:
+    build: ./
+    command: gunicorn --bind 0.0.0.0:8008 --workers 1 csdprt.wsgi:application --reload
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - 8008:8008
+    env_file:
+      - ./.env.prod
+  dbcs:
+      image: postgres:12.0-alpine
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      environment:
+        - POSTGRES_USER=hello_django
+        - POSTGRES_PASSWORD=hello_django
+        - POSTGRES_DB=hello_django_dev
+volumes:
+  postgres_data:
+
