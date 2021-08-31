@@ -9,7 +9,6 @@ RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev python3-dev jpeg-dev zlib-dev
 # install dependencies
 RUN pip install --upgrade pip
-#COPY ./requirements.txt .
 COPY . .
 RUN pip install -r requirements.txt
 # copy project
