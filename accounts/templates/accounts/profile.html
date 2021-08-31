@@ -1,11 +1,45 @@
 {% extends "header.html" %}
 {% block title %} Профиль  пользователя {% endblock %}
 {% block content %}
-<h2>Профиль пользователя {{ user.username }}</h2>
 
-{% if user.first_name and user.username %}
-<p>Здравствуйте, {{ user.first_name }} {{ user.last_name }}!</p>
-{% else %}
-<p>Здравствуйте!</p>
-{% endif %}
+<header class="bg-dark pt-9 pb-11 d-none d-md-block">
+    <div class="container-md">
+        <div class="row align-items-center">
+            <div class="col">
+
+                <!-- Heading -->
+                <h1 class="fw-bold text-white mb-2">
+                    Данные профиля {{ user.username }}
+                </h1>
+
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</header>
+
+
+<div class="container-md">
+    <div class="row">
+        <div class="col-12 col-md-9">
+            <div class="card card-bleed shadow-light-lg mb-6">
+                <div class="card card-bleed shadow-light-lg mb-6">
+                    <div class="card-body">
+
+                        {% if user.is_authenticated %}
+                            {% if user.first_name and user.username %}
+                            <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }}!</p>
+                            {% else %}
+                            <p>Здравствуйте!</p>
+                            {% endif %}
+                        {% else %}
+                            <p>Сначала войдите в систему</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
