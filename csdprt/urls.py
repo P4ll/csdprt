@@ -22,6 +22,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('landings/', include('landings.urls')),
     path('blog/', include('blog.urls')),
+    path('work/', include('work.urls'))
 ]
 
 if settings.DEVELOPMENT_MODE:

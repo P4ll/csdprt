@@ -1,0 +1,12 @@
+{% extends "header.html" %}
+
+{% block content %}
+    <form class="container w-50 p-4 bg-light" method="post">
+        {% csrf_token %}
+        <p>Вы действительно хотите удалить своё резюме?</p>
+        <p>Данное действие нельзя будет отменить!</p>
+        <p>Все данные, которые Вы ввели в резюме, будут удалены без возможности восстановления.</p>
+        <button class="btn btn-outline-danger" type="submit">Удалить</button>
+        <a href="{% url "resumes" %}" class="btn btn-outline-primary">Отмена</a>
+    </form>
+{% endblock %}

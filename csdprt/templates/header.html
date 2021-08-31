@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="{% static 'assets/css/theme.bundle.css' %}"/>
     <link rel="stylesheet" href="{% static 'style.css' %}"/>
     <link rel="stylesheet" href="{% static 'assets/css/blog.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/work.css' %}"/>
 </head>
-<body class="main bg-light" data-aos-easing="ease-out-quad" data-aos-duration="700"
+<body class="work_style main bg-light" data-aos-easing="ease-out-quad" data-aos-duration="700"
       data-aos-delay="0">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
@@ -152,17 +153,18 @@
                                             <br/>
 
                                             <!-- Heading -->
-                                            <!--                                            <h6 class="dropdown-header"> <h3 class="pb-3 text-muted" align="center">Комментарии</h3>
-                                                                                            Трудоустройство
-                                                                                        </h6>
+                                            <h6 class="dropdown-header">
+<!--                                                <h3 class="pb-3 text-muted" align="center">Комментарии</h3>-->
+                                                Трудоустройство
+                                            </h6>
 
-                                                                                        <a class="dropdown-item" href="../index.html">
-                                                                                            Открытые вакансии
-                                                                                        </a>
-                                                                                        <a class="dropdown-item" href="../enterprise.html">
-                                                                                            Прохождение практики
-                                                                                        </a>
-                                            -->
+                                            <a class="dropdown-item" href="/work/vacancies/">
+                                                Открытые вакансии и практика
+                                            </a>
+<!--                                            <a class="dropdown-item" href="../enterprise.html">-->
+<!--                                                Прохождение практики-->
+<!--                                            </a>-->
+
                                         </div>
                                         <div class="col-6">
                                             <!-- Heading -->
@@ -417,6 +419,41 @@
                         </div> <!-- / .row -->
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarStudent" data-bs-toggle="dropdown" href="#"
+                       aria-haspopup="true" aria-expanded="false">
+                        Трудоустройство
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-xl p-0" aria-labelledby="navbarLandings">
+                        <div class="row gx-0">
+                            <div class="col-12 col-lg-12">
+                                <div class="dropdown-body">
+                                    <div class="row gx-0">
+                                        <div class="col-6">
+                                            <!-- Heading -->
+                                            <h6 class="dropdown-header">
+                                                Для студентов
+                                            </h6>
+
+                                            <a class="dropdown-item" href="/work/vacancies/">
+                                                Открытые вакансии и практика
+                                            </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <!-- Heading -->
+                                            <h6 class="dropdown-header">
+                                               Для компаний
+                                            </h6>
+                                            <a class="dropdown-item" href="/work/resumes/">
+                                                Просмотр резюме
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- / .row -->
+                    </div>
+                </li>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
@@ -444,6 +481,11 @@
                                                 <!-- List -->
                                                 <a class="dropdown-item" href="{% url 'accounts:profile_change' %}">Данные
                                                     профиля</a>
+                                                    {% if have_resume and not is_deleted %}
+                                                        <a class="dropdown-item" href="{% url "redirect_to_my_resume" %}">Моё резюме</a>
+                                                    {% else %}
+                                                        <a class="dropdown-item" href="{% url "create_resume" %}">Создать резюме</a>
+                                                    {% endif %}
                                                 <a class="dropdown-item" href="{% url 'blog:news_admin' %}">Мои новости</a>
                                                 <a class="dropdown-item" href="{% url 'blog:article_admin' %}">Мои статьи</a>
                                                 <a class="dropdown-item" href="{% url 'accounts:password_change' %}">Сменить
@@ -474,6 +516,10 @@
 <script type="text/javascript" src="{% static 'js/bootstrap/popper.min.js' %}"></script>
 {#<script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>#}
 <script type="text/javascript" src="{% static 'js/bootstrap/bootstrap.bundle.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="{% static 'js/work/pdfmake/pdfmake.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/work/pdfmake/vfs_fonts.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/work/script.js' %}"></script>
 
 {% block script %}{% endblock %}
 
