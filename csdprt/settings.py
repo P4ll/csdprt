@@ -148,12 +148,13 @@ if DEVELOPMENT_MODE:
         os.path.join(BASE_DIR, "static/"),
     ]
 #    STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    STATIC_URL = os.path.join(BASE_DIR, "/static/")
+#    STATIC_URL = os.path.join(BASE_DIR, "/static/")
     MEDIA_URL = '/uploads/'
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
-    MEDIA_URL = 'http://staticfist.simcase.ru/uploads/'
+#    STATIC_URL = os.environ.get("STATIC_URL", os.path.join(BASE_DIR, "/static/"))
+#    MEDIA_URL = 'http://staticfist.simcase.ru/uploads/'
+    MEDIA_URL= '/uploads/'
 print('DEVELOPMENT_MODE', DEVELOPMENT_MODE, BASE_DIR, STATIC_URL)
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")
 

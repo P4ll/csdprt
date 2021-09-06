@@ -835,7 +835,7 @@
                             <div class="col-auto">
 
                                 <!-- Submit -->
-                                <button type="submit" id="sendDataButton" class="btn btn-primary lift">
+                                <button type="button" id="sendDataButton" class="btn btn-primary lift">
                                     Отправить данные
                                 </button>
 
@@ -900,13 +900,15 @@
         </div>
     </section>
     <script type="text/javascript">
-        $("#contactForm").submit(function (data) {
+	    $( document ).ready(function() {
+        $("#sendDataButton").click(function () {
             $.ajax({
-                type: $(this).attr('method'),
+                type: $('#contactForm').attr('method'),
                 url: window.location.href,//$(this).attr('action'),
-                data: $(this).serialize(),
-                context: this,
+                data: $('#contactForm').serialize(),
+                context: $('#contactForm'),
                 success: function (response) {
+			
                     if (response.result === "ok") {
                         $('#myModal').modal('show');
                         return false;
@@ -920,6 +922,7 @@
             });
             return false;
         });
+	    });
     </script>
     <style type="text/css" data-typed-js-css="true">
         .typed-cursor {
